@@ -1,0 +1,25 @@
+------------ UI -----------
+RegisterScreen.tsx
+LoginScreen.tsx
+ProfileScreen.tsx
+OnboardingScreen.tsx
+HomeScreen.tsx
+ProductDetailsScreen.tsx
+
+
+------------ LOGIC -----------
+ProfileScreen.tsx
+RegisterScreen.tsx
+LoginScreen.tsx
+OnboardingScreen.tsx
+
+
+HomeScreen.tsx
+ProductDetailsScreen.tsx
+
+
+
+OffersScreen.tsx
+WishlistScreen.tsx
+
+

@@ -14,6 +14,7 @@ LoginScreen.tsx
 OnboardingScreen.tsx
 
 
+
 HomeScreen.tsx
 ProductDetailsScreen.tsx
 
@@ -24,3 +25,84 @@ WishlistScreen.tsx
 
 
 
+
+
+Free MySQL Hosting (No Credit Card)
+1. InfinityFree
+
+Details: Fully free hosting, no credit card required.
+
+Highlights: Offers up to 400 MySQL databases, free SSL certificates, Softaculous installer, and no required payments. 
+HostingAdvice.com
+TechRadar
+
+Use case: Great for testing, hobby projects, or personal portfolio setups.
+
+2. HelioHost
+
+Details: Real free-forever hosting with MySQL support.
+
+Highlights: Allows unlimited MySQL databases and provides remote access. Signups happen at specific times, and support comes from volunteers. 
+HostingAdvice.com
+
+Use case: Useful for developers needing more flexibility and control, though availability may fluctuate.
+
+3. GoogieHost
+
+Details: Free plan includes MySQL hosting without requiring a credit card.
+
+Highlights: Comes with free SSL, Cloudflare CDN, LiteSpeed servers, and no ads. 
+HostingAdvice.com
+googiehost.com
+
+Use case: Ideal for lightweight projects, prototypes, or anyone needing aesthetic features plus database.
+
+4. Aiven (Free MySQL Plan)
+
+Details: Professional cloud-based MySQL hosting without credit card requirement.
+
+Highlights: Dedicated VM, 1 CPU, 1 GB RAM, 1 GB storage, daily backups, monitoring, Terraform/CLI integration. 
+Aiven
+
+Use case: Suited for more serious prototyping or development environments that need reliability and observability.
+
+5. TiDB Cloud (Free Tier)
+
+Details: MySQL-compatible free tier with no credit card required.
+
+Highlights: Around 5 GB storage and ~50 concurrent connections, suitable for cloud-based MySQL workloads. 
+adityawakale.hashnode.dev
+Reddit
+
+Use case: Well-suited for heavier usage scenarios, real-time apps, or when you need decent throughput.
+
+Community Insights (from Reddit)
+
+“filess.io give you a free mysql database that you can access in the cloud” 
+Reddit
+
+“tidbcloud … permanent free 5GB storage without binding a credit card.” 
+Reddit
+
+These informal recommendations align well with the above options and can serve as additional, lightweight alternatives.
+
+Quick Comparison Table
+Provider	Credit Card?	MySQL Support	Storage	Notable Features
+InfinityFree	No	Up to 400 DBs	Moderate	SSL, Softaculous, no payments
+HelioHost	No	Unlimited DBs	Low–Moderate	Remote access, volunteer support
+GoogieHost	No	Included in free plan	≈1 GB	SSL, Cloudflare, no ads
+Aiven	No	Dedicated cloud MySQL	1 GB	Backups, monitoring, Terraform integration
+TiDB Cloud	No	MySQL-compatible	~5 GB	High connections, modern cloud environment
+Which Option Is Best for You?
+
+For simple demos or small projects:
+→ InfinityFree or GoogieHost
+
+For full control & remote access:
+→ HelioHost
+
+For professionalism with backups and monitoring:
+→ Aiven
+
+For database-heavy or performance-critical use:
+→ TiDB Cloud

@@ -1,97 +1,127 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# GlowCart 🛍️
 
-# Getting Started
+A sample e-commerce mobile app built with React Native CLI.  
+Features include onboarding, authentication (mock), product listing, product details, and profile management.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## Demo Video
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+> Video demo will be added here.  
+> Link (Loom/Jam/Drive): **_paste your video link here later_**
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+---
 
-```sh
-# Using npm
-npm start
+## Screenshots
 
-# OR using Yarn
-yarn start
+_On-device screenshots (stored in `assets/`):_
+
+### Onboarding / Get Started
+
+![Get Started](./assets/GetStarted.jpg)
+
+### Login
+
+![Login Screen](./assets/LoginScreen.jpg)
+
+### Home / Product List
+
+![Home Screen](./assets/HomeScreen.jpg)
+
+### Filter Modal
+
+![Filter Modal](./assets/FilterModal.jpg)
+
+### Product Details (1)
+
+![Product Details 1](./assets/ProductDetails1.jpg)
+
+### Product Details (2)
+
+![Product Details 2](./assets/ProductDetails2.jpg)
+
+### Wishlist / Profile
+
+![Wishlist](./assets/Wishlist.jpg)
+![Profile](./assets/ProfileScreen.jpg)
+
+---
+
+## 🚀 Setup Instructions
+
+### Prerequisites
+
+- Node.js (LTS recommended)
+- React Native CLI
+- Android Studio (or Xcode on macOS) for emulators
+- Yarn or npm
+- Git
+
+### Install & Run
+
+```bash
+# clone repo (if not already)
+git clone https://github.com/Rcmade/GlowCart.git
+cd GlowCart
+
+# install dependencies
+npm install
+# or
+# yarn install
+
+# Android
+npx react-native run-android
+
+# iOS (macOS only)
+cd ios && pod install && cd ..
+npx react-native run-ios
 ```
 
-## Step 2: Build and run your app
+If you use a specific `.env` set up, add instructions here (none included in this repo by default).
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+---
 
-### Android
+## ⚙️ Project Structure (high level)
 
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```js
+src/
+├─ App.tsx
+├─ navigation/
+│  ├─ AppNavigator.tsx
+│  └─ TabNavigator.tsx
+├─ lib/
+│  ├─ api.ts                # axios instance + interceptors
+│  └─ asyncStorage.ts       # typed AsyncStorage helpers
+├─ providers/
+│  └─ QueryProvider.tsx     # react-query provider wrapper
+├─ features/
+│  ├─ auth/
+│  │  ├─ hooks/
+│  │  │  ├─ useLogin.ts
+│  │  │  └─ useRegister.ts
+│  │  └─ api.ts
+│  └─ products/
+│     ├─ hooks/
+│     │  ├─ useProducts.ts
+│     │  └─ useProductDetails.ts
+│     ├─ api.ts
+│     └─ components/
+│        └─ cards/ProductCard.tsx
+├─ screens/
+│  ├─ OnboardingScreen.tsx
+│  ├─ LoginScreen.tsx
+│  ├─ RegisterScreen.tsx
+│  ├─ HomeScreen.tsx
+│  └─ ProductDetailsScreen.tsx
+assets/ # README images you already have
 ```
 
-### iOS
+---
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+## 📌 Assumptions & Known Issues
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- Authentication is mocked via AsyncStorage (no real backend auth or secure tokens).
+- Products are fetched from DummyJSON and mapped to a cosmetic product shape for UI consistency.
+- Cart/checkout flow not implemented in this version.
+- Tested primarily on Android emulator (mention concrete device/emulator details if relevant).
+<!-- - Video demo to be added later. -->

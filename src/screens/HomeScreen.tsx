@@ -81,7 +81,8 @@ export default function HomeScreen() {
       <View style={styles.container}>
         <SafeAreaView
           style={styles.container}
-          edges={['left', 'right', 'bottom']}
+          edges={[]}
+          // edges={['left', 'right', 'bottom']}
         >
           <View style={styles.header}>
             <View style={styles.logoContainer}>

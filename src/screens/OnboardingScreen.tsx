@@ -35,7 +35,8 @@ export default function OnboardingScreen() {
       if (currentUser) {
         navigation.replace('Main');
       } else {
-        navigation.replace('Login');
+        // Later directly navigate to login screen
+        // navigation.replace('Login');
       }
     }
     return () => {};
@@ -60,7 +61,11 @@ export default function OnboardingScreen() {
             </View>
 
             <View style={styles.textContainer}>
-              <Text style={styles.brandName}>Viorra</Text>
+              {/* <Text style={styles.brandName}>Viorra</Text> */}
+              <Image
+                style={styles.logo}
+                source={require('../assets/images/Viorra.png')}
+              />
               <Text style={styles.tagline}>Your Beauty, Delivered.</Text>
             </View>
 
@@ -106,6 +111,12 @@ const createStyles = (theme: ThemeType) =>
     textContainer: {
       alignItems: 'center',
       marginVertical: 40,
+    },
+
+    logo: {
+      width: 160,
+      height: 80,
+      resizeMode: 'contain',
     },
     brandName: {
       fontSize: 60,

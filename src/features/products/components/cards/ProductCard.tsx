@@ -56,7 +56,7 @@ export default ProductCard;
 const createStyles = (theme: ThemeType) =>
   StyleSheet.create({
     productCard: {
-      flex: 0.48,
+      flex: 0.5,
       backgroundColor: theme.colors.backgroundLight,
       borderRadius: 12,
       marginBottom: 15,

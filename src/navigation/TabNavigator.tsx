@@ -1,14 +1,15 @@
-import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
 import { StatusBar } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Octicons from 'react-native-vector-icons/Octicons';
 
+import { useTheme } from '../providers/theme/ThemeProvider';
 import HomeScreen from '../screens/HomeScreen';
 import OffersScreen from '../screens/OffersScreen';
-import WishlistScreen from '../screens/WishlistScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import WishlistScreen from '../screens/WishlistScreen';
 
 export type TabParamList = {
   Home: undefined;
@@ -31,14 +32,16 @@ const createTabIcon =
 export default function TabNavigator() {
   const insets = useSafeAreaInsets();
 
+  const { theme } = useTheme();
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="transparent" />
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: '#B84953',
-          tabBarInactiveTintColor: '#636363',
+          tabBarActiveTintColor: theme.colors.tintColorPrimary,
+          tabBarInactiveTintColor: theme.colors.mutedText,
           tabBarStyle: {
             height: 58 + insets.bottom,
           },
@@ -70,10 +73,3 @@ export default function TabNavigator() {
     </>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: 'FFEDE8',
-//   },
-// });

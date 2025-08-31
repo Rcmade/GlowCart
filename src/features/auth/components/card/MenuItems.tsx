@@ -11,6 +11,8 @@ import {
   MenuItemsType,
   SupportItemsType,
 } from '../../../../content/profileContent';
+import { useTheme } from '../../../../providers/theme/ThemeProvider';
+import { ThemeType } from '../../../../providers/theme/themes';
 
 type Props = {
   items: (MenuItemsType | SupportItemsType)[];
@@ -18,6 +20,9 @@ type Props = {
 };
 
 const MenuItems: React.FC<Props> = ({ items, showSubtitle = true }) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
+
   const renderMenuItem = (item: MenuItemsType | SupportItemsType) => (
     <TouchableOpacity
       key={item.title}
@@ -26,7 +31,11 @@ const MenuItems: React.FC<Props> = ({ items, showSubtitle = true }) => {
     >
       <View style={styles.menuItemLeft}>
         <View style={styles.iconContainer}>
-          <Icon name={item.icon} size={20} color="#4B4B4B" />
+          <Icon
+            name={item.icon}
+            size={20}
+            color={theme.colors.mediumDarkGray}
+          />
         </View>
         <View style={styles.menuItemText}>
           <Text style={styles.menuItemTitle}>{item.title}</Text>
@@ -35,7 +44,11 @@ const MenuItems: React.FC<Props> = ({ items, showSubtitle = true }) => {
           ) : null}
         </View>
       </View>
-      <Icon name="chevron-forward" size={20} color="#4B4B4B" />
+      <Icon
+        name="chevron-forward"
+        size={20}
+        color={theme.colors.mediumDarkGray}
+      />
     </TouchableOpacity>
   );
 
@@ -52,52 +65,52 @@ const MenuItems: React.FC<Props> = ({ items, showSubtitle = true }) => {
 };
 
 export default MenuItems;
-
-const styles = StyleSheet.create({
-  menuSection: {
-    backgroundColor: '#FFF',
-    borderRadius: 16,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 3,
-  },
-  menuItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 18,
-    paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#F5F5F5',
-  },
-  menuItemLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    flex: 1,
-  },
-  iconContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#F8F8F8',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 15,
-  },
-  menuItemText: {
-    flex: 1,
-  },
-  menuItemTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 2,
-  },
-  menuItemSubtitle: {
-    fontSize: 12,
-    color: '#666',
-  },
-});
+const createStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    menuSection: {
+      backgroundColor: theme.colors.backgroundLight,
+      borderRadius: 16,
+      marginBottom: 20,
+      shadowColor: theme.colors.black,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 8,
+      elevation: 3,
+    },
+    menuItem: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingVertical: 18,
+      paddingHorizontal: 20,
+      borderBottomWidth: 1,
+      borderBottomColor: theme.colors.surfaceLight,
+    },
+    menuItemLeft: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      flex: 1,
+    },
+    iconContainer: {
+      width: 40,
+      height: 40,
+      borderRadius: 20,
+      backgroundColor: theme.colors.backgroundOffWhite,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginRight: 15,
+    },
+    menuItemText: {
+      flex: 1,
+    },
+    menuItemTitle: {
+      fontSize: 16,
+      fontWeight: '600',
+      color: theme.colors.textSecondary,
+      marginBottom: 2,
+    },
+    menuItemSubtitle: {
+      fontSize: 12,
+      color: theme.colors.mediumGray,
+    },
+  });

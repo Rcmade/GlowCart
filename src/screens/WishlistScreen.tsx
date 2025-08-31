@@ -17,10 +17,14 @@ import WishlistCard from '../features/wishlist/components/card/WishlistCard';
 import useWishlist from '../features/wishlist/hooks/useWishlist';
 import useWishlistProducts from '../features/wishlist/hooks/useWishlistProducts';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import { useTheme } from '../providers/theme/ThemeProvider';
+import { ThemeType } from '../providers/theme/themes';
 
 type WishlistScreenNavigationProp = StackNavigationProp<RootStackParamList>;
 
 export default function WishlistScreen() {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const navigation = useNavigation<WishlistScreenNavigationProp>();
   const { toggle } = useWishlist();
   const {
@@ -60,7 +64,7 @@ export default function WishlistScreen() {
 
   const renderEmptyWishlist = () => (
     <View style={styles.emptyContainer}>
-      <Icon name="heart-outline" size={64} color="#E0E0E0" />
+      <Icon name="heart-outline" size={64} color={theme.colors.veryLightGray} />
       <Text style={styles.emptyTitle}>Your Wishlist is Empty</Text>
       <Text style={styles.emptySubtitle}>
         Start adding products you love to see them here!
@@ -110,60 +114,61 @@ export default function WishlistScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFEDE8' },
+const createStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    container: { flex: 1, backgroundColor: theme.colors.backgroundWarm },
 
-  header: {
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 5,
-  },
-  itemCount: {
-    fontSize: 14,
-    color: '#333',
-  },
-  listContainer: {
-    flexGrow: 1,
-    padding: 20,
-  },
+    header: {
+      paddingHorizontal: 20,
+      paddingVertical: 20,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: theme.colors.textSecondary,
+      marginBottom: 5,
+    },
+    itemCount: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+    },
+    listContainer: {
+      flexGrow: 1,
+      padding: 20,
+    },
 
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 40,
-  },
+    emptyContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingHorizontal: 40,
+    },
 
-  emptyTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
-    marginTop: 20,
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  emptySubtitle: {
-    fontSize: 14,
-    color: '#333',
-    textAlign: 'center',
-    lineHeight: 20,
-    marginBottom: 30,
-  },
+    emptyTitle: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: theme.colors.textSecondary,
+      marginTop: 20,
+      marginBottom: 10,
+      textAlign: 'center',
+    },
+    emptySubtitle: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      textAlign: 'center',
+      lineHeight: 20,
+      marginBottom: 30,
+    },
 
-  shopNowButton: {
-    backgroundColor: '#C4767C',
-    paddingHorizontal: 30,
-    paddingVertical: 15,
-    borderRadius: 25,
-  },
-  shopNowText: {
-    color: '#FFF',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-});
+    shopNowButton: {
+      backgroundColor: theme.colors.accent,
+      paddingHorizontal: 30,
+      paddingVertical: 15,
+      borderRadius: 25,
+    },
+    shopNowText: {
+      color: theme.colors.backgroundLight,
+      fontSize: 16,
+      fontWeight: '600',
+    },
+  });

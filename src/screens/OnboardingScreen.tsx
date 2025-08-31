@@ -14,6 +14,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import GradientContainer from '../components/containers/GradientContainer';
 import { useCurrentUser } from '../features/auth/hooks/useCurrentUser';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import { useTheme } from '../providers/theme/ThemeProvider';
+import { ThemeType } from '../providers/theme/themes';
 
 const { width, height } = Dimensions.get('window');
 type OnboardingScreenNavigationProp = StackNavigationProp<
@@ -24,6 +26,9 @@ type OnboardingScreenNavigationProp = StackNavigationProp<
 export default function OnboardingScreen() {
   const navigation = useNavigation<OnboardingScreenNavigationProp>();
   const { currentUser, isLoading } = useCurrentUser();
+
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
 
   useEffect(() => {
     if (!isLoading) {
@@ -76,72 +81,73 @@ export default function OnboardingScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  content: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 50,
-  },
-  imageContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-  },
-  heroImage: {
-    width: width * 0.9,
-    height: height * 0.7,
-    borderRadius: 20,
-  },
-  textContainer: {
-    alignItems: 'center',
-    marginVertical: 40,
-  },
-  brandName: {
-    fontSize: 60,
-    fontWeight: '400',
-    color: '#FFF',
-    fontFamily: 'Italiana',
-    textAlign: 'center',
-    letterSpacing: 2,
-    marginBottom: 10,
-  },
-  tagline: {
-    fontSize: 24,
-    fontWeight: '300',
-    color: '#FFF',
-    textAlign: 'center',
-    opacity: 0.9,
-    letterSpacing: 1,
-  },
-  getStartedButton: {
-    backgroundColor: '#B84953',
-    paddingHorizontal: 40,
-    paddingVertical: 14,
-    borderRadius: 25,
-    marginBottom: 30,
-  },
-  buttonText: {
-    color: '#FFF',
-    fontSize: 24,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  indicators: {
-    width: width * 0.5,
-    height: 12,
-    backgroundColor: '#D5C0BA',
-    borderRadius: 24,
-    position: 'relative',
-  },
-  indicator: {
-    width: '40%',
-    height: '100%',
-    borderRadius: 24,
-    backgroundColor: '#F3E2DD',
-  },
-});
+const createStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+    },
+    content: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingVertical: 50,
+    },
+    imageContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+    },
+    heroImage: {
+      width: width * 0.9,
+      height: height * 0.7,
+      borderRadius: 20,
+    },
+    textContainer: {
+      alignItems: 'center',
+      marginVertical: 40,
+    },
+    brandName: {
+      fontSize: 60,
+      fontWeight: '400',
+      color: theme.colors.backgroundLight,
+      fontFamily: 'Italiana',
+      textAlign: 'center',
+      letterSpacing: 2,
+      marginBottom: 10,
+    },
+    tagline: {
+      fontSize: 24,
+      fontWeight: '300',
+      color: theme.colors.backgroundLight,
+      textAlign: 'center',
+      opacity: 0.9,
+      letterSpacing: 1,
+    },
+    getStartedButton: {
+      backgroundColor: theme.colors.primary,
+      paddingHorizontal: 40,
+      paddingVertical: 14,
+      borderRadius: 25,
+      marginBottom: 30,
+    },
+    buttonText: {
+      color: theme.colors.backgroundLight,
+      fontSize: 24,
+      fontWeight: '500',
+      textAlign: 'center',
+    },
+    indicators: {
+      width: width * 0.5,
+      height: 12,
+      backgroundColor: theme.colors.extraLightGray,
+      borderRadius: 24,
+      position: 'relative',
+    },
+    indicator: {
+      width: '40%',
+      height: '100%',
+      borderRadius: 24,
+      backgroundColor: theme.colors.neutralLight2,
+    },
+  });

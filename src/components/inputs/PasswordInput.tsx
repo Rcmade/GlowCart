@@ -7,6 +7,8 @@ import {
   View,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import { useTheme } from '../../providers/theme/ThemeProvider';
+import { ThemeType } from '../../providers/theme/themes';
 
 type PasswordInputProps = Omit<TextInputProps, 'secureTextEntry'> & {
   value: string;
@@ -19,12 +21,14 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   placeholder = 'Password',
   ...rest
 }) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const [showPassword, setShowPassword] = useState(false);
 
   return (
     <View style={styles.inputContainer}>
       <TextInput
-        placeholderTextColor="#9A8F8E"
+        placeholderTextColor={theme.colors.extraLightGray}
         style={styles.input}
         placeholder={placeholder}
         value={value}
@@ -40,7 +44,7 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
         <Feather
           name={showPassword ? 'eye-off' : 'eye'}
           size={20}
-          color="#9A8F8E"
+          color={theme.colors.extraLightGray}
         />
       </TouchableOpacity>
     </View>
@@ -48,27 +52,27 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
 };
 
 export default PasswordInput;
-
-const styles = StyleSheet.create({
-  inputContainer: {
-    position: 'relative',
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#989696',
-    borderRadius: 14,
-    marginBottom: 14,
-    height: 58,
-    justifyContent: 'center',
-  },
-  input: {
-    paddingLeft: 16,
-    paddingRight: 44,
-    fontSize: 15,
-    color: '#767676',
-  },
-  inputIcon: {
-    position: 'absolute',
-    right: 15,
-    top: 15,
-  },
-});
+const createStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    inputContainer: {
+      position: 'relative',
+      backgroundColor: theme.colors.backgroundLight,
+      borderWidth: 1,
+      borderColor: theme.colors.extraLightGray,
+      borderRadius: 14,
+      marginBottom: 14,
+      height: 58,
+      justifyContent: 'center',
+    },
+    input: {
+      paddingLeft: 16,
+      paddingRight: 44,
+      fontSize: 15,
+      color: theme.colors.mediumGray2,
+    },
+    inputIcon: {
+      position: 'absolute',
+      right: 15,
+      top: 15,
+    },
+  });

@@ -66,3 +66,5 @@ export const lightTheme = {
 export const darkTheme: typeof lightTheme = {
   colors: colors,
 };
+
+export type ThemeType = typeof lightTheme;

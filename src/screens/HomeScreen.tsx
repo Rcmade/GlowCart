@@ -22,13 +22,15 @@ import { useProducts } from '../features/products/hooks/useProducts';
 import { Product } from '../features/products/types';
 import useWishlist from '../features/wishlist/hooks/useWishlist';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import { useTheme } from '../providers/theme/ThemeProvider';
+import { ThemeType } from '../providers/theme/themes';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList>;
 
 export default function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProp>();
-  // const { products, loading, fetchProducts, toggleWishlist, wishlist } =
-  //   useProductStore();
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
 
   const tabBarHeight = useBottomTabBarHeight();
 
@@ -89,11 +91,15 @@ export default function HomeScreen() {
                   <Icon
                     name="notifications-outline"
                     size={24}
-                    color="#4B4B4B"
+                    color={theme.colors.mediumDarkGray}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.iconButton}>
-                  <Icon name="bag-outline" size={24} color="#4B4B4B" />
+                  <Icon
+                    name="bag-outline"
+                    size={24}
+                    color={theme.colors.mediumDarkGray}
+                  />
                 </TouchableOpacity>
               </View>
             </View>
@@ -102,13 +108,13 @@ export default function HomeScreen() {
                 <Icon
                   name="search"
                   size={20}
-                  color="#4B4B4B"
+                  color={theme.colors.mediumDarkGray}
                   style={styles.searchIcon}
                 />
                 <TextInput
                   style={styles.searchInput}
                   placeholder="Search for all products"
-                  placeholderTextColor={'#4B4B4B'}
+                  placeholderTextColor={theme.colors.mediumDarkGray}
                   value={filters.search}
                   onChangeText={setSearch}
                 />
@@ -132,7 +138,11 @@ export default function HomeScreen() {
                 <Text style={styles.filterText}>
                   Filters {appliedCount > 0 ? `(${appliedCount})` : ''}
                 </Text>
-                <MaterialDesignIcons name="menu-down" size={24} color="#000" />
+                <MaterialDesignIcons
+                  name="menu-down"
+                  size={24}
+                  color={theme.colors.black}
+                />
               </TouchableOpacity>
             </View>
 
@@ -151,8 +161,8 @@ export default function HomeScreen() {
                 <RefreshControl
                   refreshing={isLoading}
                   onRefresh={onRefresh}
-                  tintColor="#B84953"
-                  colors={['#B84953']}
+                  tintColor={theme.colors.tintColorPrimary}
+                  colors={[theme.colors.primary]}
                 />
               }
               ListEmptyComponent={
@@ -165,7 +175,10 @@ export default function HomeScreen() {
               ListFooterComponent={
                 isFetchingNextPage ? (
                   <View>
-                    <ActivityIndicator size="small" color="#B84953" />
+                    <ActivityIndicator
+                      size="small"
+                      color={theme.colors.tintColorPrimary}
+                    />
                   </View>
                 ) : null
               }
@@ -193,116 +206,117 @@ export default function HomeScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFEDE8' },
+const createStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    container: { flex: 1, backgroundColor: theme.colors.backgroundWarm },
 
-  header: {
-    paddingHorizontal: 20,
-    paddingTop: 40,
-    backgroundColor: '#FFF',
-    gap: 6,
-  },
-  logoContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  logo: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#B84953',
-    letterSpacing: 1,
-  },
-  headerIcons: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-  iconButton: {
-    padding: 8,
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    paddingBottom: 20,
-    gap: 12,
-  },
-  searchInputContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#FFF',
-    borderRadius: 50,
-    paddingHorizontal: 15,
-    borderWidth: 1,
-    borderColor: '#8F8F8F',
-  },
-  searchIcon: {
-    marginRight: 10,
-  },
-  searchInput: {
-    flex: 1,
-    paddingVertical: 15,
-    fontSize: 16,
-    color: '#333',
-  },
+    header: {
+      paddingHorizontal: 20,
+      paddingTop: 40,
+      backgroundColor: theme.colors.backgroundLight,
+      gap: 6,
+    },
+    logoContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    logo: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: theme.colors.primary,
+      letterSpacing: 1,
+    },
+    headerIcons: {
+      flexDirection: 'row',
+      gap: 8,
+    },
+    iconButton: {
+      padding: 8,
+    },
+    searchContainer: {
+      flexDirection: 'row',
+      paddingBottom: 20,
+      gap: 12,
+    },
+    searchInputContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      backgroundColor: theme.colors.backgroundLight,
+      borderRadius: 50,
+      paddingHorizontal: 15,
+      borderWidth: 1,
+      borderColor: theme.colors.mutedGray,
+    },
+    searchIcon: {
+      marginRight: 10,
+    },
+    searchInput: {
+      flex: 1,
+      paddingVertical: 15,
+      fontSize: 16,
+      color: theme.colors.darkGray,
+    },
 
-  filterSummary: {
-    marginLeft: 8,
-    backgroundColor: '#C4767C',
-    width: 36,
-    height: 36,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    filterSummary: {
+      marginLeft: 8,
+      backgroundColor: theme.colors.accent,
+      width: 36,
+      height: 36,
+      borderRadius: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
 
-  content: {
-    paddingTop: 6,
-    paddingHorizontal: 20,
-    gap: 6,
-    // paddingBottom:80,
-  },
+    content: {
+      paddingTop: 6,
+      paddingHorizontal: 20,
+      gap: 6,
+      // paddingBottom:80,
+    },
 
-  sectionHeaderContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  sectionHeader: {
-    justifyContent: 'space-between',
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '500',
-    color: '#000',
-  },
-  productCount: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#636363',
-  },
+    sectionHeaderContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    sectionHeader: {
+      justifyContent: 'space-between',
+    },
+    sectionTitle: {
+      fontSize: 20,
+      fontWeight: '500',
+      color: theme.colors.black,
+    },
+    productCount: {
+      fontSize: 16,
+      fontWeight: '500',
+      color: theme.colors.mutedText,
+    },
 
-  filterButton: {
-    backgroundColor: '#fff',
-    height: 40,
-    paddingHorizontal: 8,
-    borderRadius: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  filterText: {
-    color: '#000',
-    fontSize: 14,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
+    filterButton: {
+      backgroundColor: theme.colors.backgroundLight,
+      height: 40,
+      paddingHorizontal: 8,
+      borderRadius: 12,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    filterText: {
+      color: theme.colors.black,
+      fontSize: 14,
+      fontWeight: '500',
+      textAlign: 'center',
+    },
 
-  emptyState: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 50,
-  },
-  emptyStateText: {
-    fontSize: 16,
-    color: '#8E8E8F',
-    textAlign: 'center',
-  },
-});
+    emptyState: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingVertical: 50,
+    },
+    emptyStateText: {
+      fontSize: 16,
+      color: theme.colors.lightGray,
+      textAlign: 'center',
+    },
+  });

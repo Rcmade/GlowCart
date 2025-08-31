@@ -9,6 +9,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
+import { useTheme } from '../../providers/theme/ThemeProvider';
+import { ThemeType } from '../../providers/theme/themes';
 
 type InputWithIconProps = TextInputProps & {
   icon: string;
@@ -22,40 +24,48 @@ const InputWithIcon: React.FC<InputWithIconProps> = ({
   inputStyle,
   ...textInputProps
 }) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   return (
     <View style={[styles.inputContainer, containerStyle]}>
       <TextInput
-        placeholderTextColor="#9A8F8E"
+        placeholderTextColor={theme.colors.extraLightGray}
         style={[styles.input, inputStyle]}
         {...textInputProps}
       />
 
-      <Feather name={icon} size={20} color="#9A8F8E" style={styles.icon} />
+      <Feather
+        name={icon}
+        size={20}
+        color={theme.colors.extraLightGray}
+        style={styles.icon}
+      />
     </View>
   );
 };
 
 export default InputWithIcon;
 
-const styles = StyleSheet.create({
-  inputContainer: {
-    position: 'relative',
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#989696',
-    borderRadius: 14,
-    marginBottom: 14,
-    height: 58,
-    justifyContent: 'center',
-  },
-  input: {
-    fontSize: 16,
-    flex: 1,
-    paddingHorizontal: 15,
-  },
-  icon: {
-    position: 'absolute',
-    top: 18,
-    right: 15,
-  },
-});
+const createStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    inputContainer: {
+      position: 'relative',
+      backgroundColor: theme.colors.backgroundLight,
+      borderWidth: 1,
+      borderColor: theme.colors.extraLightGray,
+      borderRadius: 14,
+      marginBottom: 14,
+      height: 58,
+      justifyContent: 'center',
+    },
+    input: {
+      fontSize: 16,
+      flex: 1,
+      paddingHorizontal: 15,
+    },
+    icon: {
+      position: 'absolute',
+      top: 18,
+      right: 15,
+    },
+  });

@@ -48,12 +48,7 @@ const RatingCard: React.FC<RatingCardProps> = ({
 };
 
 export default RatingCard;
-
 const styles = StyleSheet.create({
-  // container: {
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  // },
   stars: {
     flexDirection: 'row',
     marginRight: 10,

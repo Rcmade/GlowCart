@@ -8,6 +8,8 @@ import {
   View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../../../../providers/theme/ThemeProvider';
+import { ThemeType } from '../../../../providers/theme/themes';
 import useCategory from '../../../category/hooks/useCategory';
 import { LIMITS, SORT_OPTIONS, TAGS } from '../../content/productContent';
 import { ProductFilters, SortOption } from '../../hooks/useProductFilters';
@@ -31,6 +33,9 @@ export default function FilterDialog({
   onApply,
 }: FilterDialogProps) {
   const { data } = useCategory();
+
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const [tempFilters, setTempFilters] = useState<ProductFilters>(() => ({
     search: '',
     category: initialFilters.category ?? null,
@@ -84,27 +89,27 @@ export default function FilterDialog({
       onRequestClose={onClose}
       transparent
     >
-      <SafeAreaView style={modalStyles.safeArea}>
-        <TouchableOpacity style={modalStyles.backdrop} onPress={onClose} />
-        <View style={modalStyles.sheet}>
+      <SafeAreaView style={styles.safeArea}>
+        <TouchableOpacity style={styles.backdrop} onPress={onClose} />
+        <View style={styles.sheet}>
           {/* Header */}
-          <View style={modalStyles.sheetHeader}>
-            <Text style={modalStyles.sheetTitle}>Filters</Text>
+          <View style={styles.sheetHeader}>
+            <Text style={styles.sheetTitle}>Filters</Text>
             <TouchableOpacity onPress={onClose}>
-              <Text style={modalStyles.sheetClose}>Close</Text>
+              <Text style={styles.sheetClose}>Close</Text>
             </TouchableOpacity>
           </View>
 
           {/* Scrollable content */}
           <ScrollView
-            style={modalStyles.scrollArea}
-            contentContainerStyle={modalStyles.scrollContent}
+            style={styles.scrollArea}
+            contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false}
           >
             {/* Category */}
-            <View style={modalStyles.section}>
-              <Text style={modalStyles.sectionTitle}>Category</Text>
-              <View style={modalStyles.optionsRow}>
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Category</Text>
+              <View style={styles.optionsRow}>
                 {(data || []).map(cat => {
                   const value =
                     cat.slug === 'all' ? null : cat?.slug.toLowerCase();
@@ -112,16 +117,13 @@ export default function FilterDialog({
                   return (
                     <TouchableOpacity
                       key={cat?.slug}
-                      style={[
-                        modalStyles.chip,
-                        active && modalStyles.chipActive,
-                      ]}
+                      style={[styles.chip, active && styles.chipActive]}
                       onPress={() => setCategory(value)}
                     >
                       <Text
                         style={[
-                          modalStyles.chipText,
-                          active && modalStyles.chipTextActive,
+                          styles.chipText,
+                          active && styles.chipTextActive,
                         ]}
                       >
                         {cat.name}
@@ -133,24 +135,21 @@ export default function FilterDialog({
             </View>
 
             {/* Tags */}
-            <View style={modalStyles.section}>
-              <Text style={modalStyles.sectionTitle}>Tags</Text>
-              <View style={modalStyles.optionsRow}>
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Tags</Text>
+              <View style={styles.optionsRow}>
                 {TAGS.map(tag => {
                   const active = tempFilters.tags.includes(tag);
                   return (
                     <TouchableOpacity
                       key={tag}
-                      style={[
-                        modalStyles.chip,
-                        active && modalStyles.chipActive,
-                      ]}
+                      style={[styles.chip, active && styles.chipActive]}
                       onPress={() => toggleTag(tag)}
                     >
                       <Text
                         style={[
-                          modalStyles.chipText,
-                          active && modalStyles.chipTextActive,
+                          styles.chipText,
+                          active && styles.chipTextActive,
                         ]}
                       >
                         {tag}
@@ -162,29 +161,29 @@ export default function FilterDialog({
             </View>
 
             {/* Sort */}
-            <View style={modalStyles.section}>
-              <Text style={modalStyles.sectionTitle}>Sort By</Text>
-              <View style={modalStyles.optionsColumn}>
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Sort By</Text>
+              <View style={styles.optionsColumn}>
                 {SORT_OPTIONS.map(opt => {
                   const active = tempFilters.sort === opt.key;
                   return (
                     <TouchableOpacity
                       key={opt.key}
                       style={[
-                        modalStyles.optionRow,
-                        active && modalStyles.optionRowActive,
+                        styles.optionRow,
+                        active && styles.optionRowActive,
                       ]}
                       onPress={() => setSort(opt.key)}
                     >
                       <Text
                         style={[
-                          modalStyles.optionText,
-                          active && modalStyles.optionTextActive,
+                          styles.optionText,
+                          active && styles.optionTextActive,
                         ]}
                       >
                         {opt.label}
                       </Text>
-                      {active && <Text style={modalStyles.optionTick}>✓</Text>}
+                      {active && <Text style={styles.optionTick}>✓</Text>}
                     </TouchableOpacity>
                   );
                 })}
@@ -192,24 +191,21 @@ export default function FilterDialog({
             </View>
 
             {/* Limit */}
-            <View style={modalStyles.section}>
-              <Text style={modalStyles.sectionTitle}>Show per page</Text>
-              <View style={modalStyles.optionsRow}>
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Show per page</Text>
+              <View style={styles.optionsRow}>
                 {LIMITS.map(l => {
                   const active = tempFilters.limit === l;
                   return (
                     <TouchableOpacity
                       key={l}
-                      style={[
-                        modalStyles.chip,
-                        active && modalStyles.chipActive,
-                      ]}
+                      style={[styles.chip, active && styles.chipActive]}
                       onPress={() => setLimit(l)}
                     >
                       <Text
                         style={[
-                          modalStyles.chipText,
-                          active && modalStyles.chipTextActive,
+                          styles.chipText,
+                          active && styles.chipTextActive,
                         ]}
                       >
                         {l}
@@ -222,13 +218,13 @@ export default function FilterDialog({
           </ScrollView>
 
           {/* Footer stays fixed */}
-          <View style={modalStyles.footer}>
-            <TouchableOpacity style={modalStyles.resetButton} onPress={reset}>
-              <Text style={modalStyles.resetText}>Reset</Text>
+          <View style={styles.footer}>
+            <TouchableOpacity style={styles.resetButton} onPress={reset}>
+              <Text style={styles.resetText}>Reset</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={modalStyles.applyButton}
+              style={styles.applyButton}
               onPress={() =>
                 onApply({
                   category: tempFilters.category,
@@ -238,7 +234,7 @@ export default function FilterDialog({
                 })
               }
             >
-              <Text style={modalStyles.applyText}>Apply Filters</Text>
+              <Text style={styles.applyText}>Apply Filters</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -246,86 +242,90 @@ export default function FilterDialog({
     </Modal>
   );
 }
+const createStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    scrollArea: {
+      maxHeight: '80%',
+    },
+    scrollContent: {
+      paddingBottom: 20,
+    },
+    safeArea: { flex: 1 },
+    backdrop: {
+      ...StyleSheet.absoluteFillObject,
+      backgroundColor: theme.colors.overlayBlack45,
+    },
+    sheet: {
+      marginTop: 'auto',
+      backgroundColor: theme.colors.backgroundLight,
+      borderTopLeftRadius: 16,
+      borderTopRightRadius: 16,
+      paddingHorizontal: 16,
+      paddingTop: 12,
+      paddingBottom: 24,
+    },
+    sheetHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 8,
+    },
+    sheetTitle: { fontSize: 18, fontWeight: '700' },
+    sheetClose: { color: theme.colors.primaryLight, fontWeight: '600' },
 
-const modalStyles = StyleSheet.create({
-  scrollArea: {
-    maxHeight: '80%',
-  },
-  scrollContent: {
-    paddingBottom: 20,
-  },
-  safeArea: { flex: 1 },
-  backdrop: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#00000073',
-  },
-  sheet: {
-    marginTop: 'auto',
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    paddingHorizontal: 16,
-    paddingTop: 12,
-    paddingBottom: 24,
-  },
-  sheetHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  sheetTitle: { fontSize: 18, fontWeight: '700' },
-  sheetClose: { color: '#CC3D3D', fontWeight: '600' },
+    section: { marginTop: 12 },
+    sectionTitle: {
+      fontSize: 14,
+      fontWeight: '700',
+      color: theme.colors.textSecondary,
+      marginBottom: 8,
+    },
 
-  section: { marginTop: 12 },
-  sectionTitle: {
-    fontSize: 14,
-    fontWeight: '700',
-    color: '#333',
-    marginBottom: 8,
-  },
+    optionsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+    optionsColumn: { flexDirection: 'column' },
 
-  optionsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  optionsColumn: { flexDirection: 'column' },
+    chip: {
+      paddingHorizontal: 8,
+      paddingVertical: 8,
+      borderRadius: 999,
+      backgroundColor: theme.colors.surfaceLight,
+      marginRight: 8,
+      marginBottom: 8,
+    },
+    chipActive: { backgroundColor: theme.colors.primaryLight },
+    chipText: {
+      color: theme.colors.textSecondary,
+      fontWeight: '600',
+      textTransform: 'capitalize',
+    },
+    chipTextActive: { color: theme.colors.backgroundLight },
 
-  chip: {
-    paddingHorizontal: 8,
-    paddingVertical: 8,
-    borderRadius: 999,
-    backgroundColor: '#F4F4F4',
-    marginRight: 8,
-    marginBottom: 8,
-  },
-  chipActive: { backgroundColor: '#CC3D3D' },
-  chipText: { color: '#333', fontWeight: '600',textTransform:"capitalize" },
-  chipTextActive: { color: '#fff' },
+    optionRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      paddingVertical: 10,
+      borderBottomWidth: StyleSheet.hairlineWidth,
+      borderBottomColor: theme.colors.surfaceLight,
+      alignItems: 'center',
+    },
+    optionRowActive: { backgroundColor: theme.colors.backgroundWarmLight },
+    optionText: { color: theme.colors.textSecondary },
+    optionTextActive: { color: theme.colors.primaryLight, fontWeight: '700' },
+    optionTick: { color: theme.colors.primaryLight, fontWeight: '700' },
 
-  optionRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 10,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#EEE',
-    alignItems: 'center',
-  },
-  optionRowActive: { backgroundColor: '#FFF7F7' },
-  optionText: { color: '#333' },
-  optionTextActive: { color: '#CC3D3D', fontWeight: '700' },
-  optionTick: { color: '#CC3D3D', fontWeight: '700' },
-
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 16,
-    alignItems: 'center',
-  },
-  resetButton: { paddingHorizontal: 12, paddingVertical: 10 },
-  resetText: { color: '#8E8E8F' },
-  applyButton: {
-    backgroundColor: '#CC3D3D',
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    borderRadius: 10,
-  },
-  applyText: { color: '#fff', fontWeight: '700' },
-});
+    footer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginTop: 16,
+      alignItems: 'center',
+    },
+    resetButton: { paddingHorizontal: 12, paddingVertical: 10 },
+    resetText: { color: theme.colors.textDisabled },
+    applyButton: {
+      backgroundColor: theme.colors.primaryLight,
+      paddingHorizontal: 20,
+      paddingVertical: 12,
+      borderRadius: 10,
+    },
+    applyText: { color: theme.colors.backgroundLight, fontWeight: '700' },
+  });

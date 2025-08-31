@@ -16,6 +16,8 @@ import Loading from '../components/loaders/Loading';
 import RatingCard from '../features/products/components/cards/RatingCard';
 import useProductDetails from '../features/products/hooks/useProductDetails';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import { useTheme } from '../providers/theme/ThemeProvider';
+import { ThemeType } from '../providers/theme/themes';
 
 type ProductDetailsScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -27,6 +29,8 @@ type ProductDetailsScreenRouteProp = RouteProp<
 >;
 
 export default function ProductDetailsScreen() {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   const navigation = useNavigation<ProductDetailsScreenNavigationProp>();
   const route = useRoute<ProductDetailsScreenRouteProp>();
   const { id } = route.params;
@@ -48,7 +52,11 @@ export default function ProductDetailsScreen() {
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="arrow-back" size={24} color="#333" />
+            <Icon
+              name="arrow-back"
+              size={24}
+              color={theme.colors.textSecondary}
+            />
           </TouchableOpacity>
         </View>
         <View style={styles.loadingContainer}>
@@ -68,10 +76,10 @@ export default function ProductDetailsScreen() {
               style={styles.imageButtons}
               onPress={() => navigation.goBack()}
             >
-              <Icon name="arrow-back" size={30} color="#000" />
+              <Icon name="arrow-back" size={30} color={theme.colors.black} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.imageButtons}>
-              <Icon name="bag-outline" size={30} color="#000" />
+              <Icon name="bag-outline" size={30} color={theme.colors.black} />
             </TouchableOpacity>
           </View>
         </View>
@@ -82,7 +90,11 @@ export default function ProductDetailsScreen() {
               <Text style={styles.viewSimilarText}>View Similar</Text>
             </TouchableOpacity>
             <TouchableOpacity>
-              <Icon name="share-social-sharp" size={24} color="#4B4B4B" />
+              <Icon
+                name="share-social-sharp"
+                size={24}
+                color={theme.colors.mediumDarkGray}
+              />
             </TouchableOpacity>
           </View>
           <Text style={styles.productTitle}>{product.title}</Text>
@@ -190,206 +202,207 @@ export default function ProductDetailsScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFEDE8',
-  },
-  content: {
-    flex: 1,
-    padding: 16,
-  },
-  imageContainer: {
-    backgroundColor: '#F4D4C7',
-    borderRadius: 30,
-    paddingVertical: 30,
-    alignItems: 'center',
-    position: 'relative',
-  },
-  header: {
-    position: 'absolute',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 20,
-    width: '100%',
-  },
-  imageButtons: {
-    backgroundColor: '#FFEDE8',
-    padding: 2,
-    borderRadius: 12,
-  },
-  productImage: {
-    width: '100%',
-    height: 300,
-    resizeMode: 'contain',
-  },
-  detailsContainer: {
-    paddingVertical: 10,
-    gap: 8,
-  },
-  actions: {
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-  },
-  viewSimilarButton: {
-    alignSelf: 'flex-start',
-    borderWidth: 1,
-    borderColor: '#B84953',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 20,
-  },
-  viewSimilarText: {
-    color: '#B84953',
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  productTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#070707',
-  },
-  productDescription: {
-    fontSize: 14,
-    color: '#333333',
-    lineHeight: 20,
-  },
-  ratingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
+const createStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: theme.colors.backgroundWarm,
+    },
+    content: {
+      flex: 1,
+      padding: 16,
+    },
+    imageContainer: {
+      backgroundColor: theme.colors.backgroundWarm2,
+      borderRadius: 30,
+      paddingVertical: 30,
+      alignItems: 'center',
+      position: 'relative',
+    },
+    header: {
+      position: 'absolute',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      padding: 20,
+      width: '100%',
+    },
+    imageButtons: {
+      backgroundColor: theme.colors.backgroundWarm,
+      padding: 2,
+      borderRadius: 12,
+    },
+    productImage: {
+      width: '100%',
+      height: 300,
+      resizeMode: 'contain',
+    },
+    detailsContainer: {
+      paddingVertical: 10,
+      gap: 8,
+    },
+    actions: {
+      justifyContent: 'space-between',
+      flexDirection: 'row',
+    },
+    viewSimilarButton: {
+      alignSelf: 'flex-start',
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
+      paddingHorizontal: 10,
+      paddingVertical: 5,
+      borderRadius: 20,
+    },
+    viewSimilarText: {
+      color: theme.colors.primary,
+      fontSize: 12,
+      fontWeight: '500',
+    },
+    productTitle: {
+      fontSize: 20,
+      fontWeight: '600',
+      color: theme.colors.textPrimary,
+    },
+    productDescription: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+      lineHeight: 20,
+    },
+    ratingContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
 
-  ratingText: {
-    fontSize: 18,
-    color: '#070707',
-  },
+    ratingText: {
+      fontSize: 18,
+      color: theme.colors.textPrimary,
+    },
 
-  divider: {
-    height: 1,
-    backgroundColor: '#33333360',
-    marginVertical: 8,
-  },
+    divider: {
+      height: 1,
+      backgroundColor: theme.colors.overlayDark38,
+      marginVertical: 8,
+    },
 
-  soldBy: {
-    fontSize: 14,
-    color: '#333333',
-  },
+    soldBy: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+    },
 
-  soldByText: {
-    fontWeight: '500',
-  },
+    soldByText: {
+      fontWeight: '500',
+    },
 
-  priceCartContainer: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginBottom: 8,
-  },
+    priceCartContainer: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+      marginBottom: 8,
+    },
 
-  price: {
-    fontSize: 32,
-    fontWeight: '700',
-    color: '#070707',
-    marginRight: 24,
-  },
-  originalPrice: {
-    fontSize: 24,
-    color: '#767676',
-    textDecorationLine: 'line-through',
-  },
+    price: {
+      fontSize: 32,
+      fontWeight: '700',
+      color: theme.colors.textPrimary,
+      marginRight: 24,
+    },
+    originalPrice: {
+      fontSize: 24,
+      color: theme.colors.mediumGray2,
+      textDecorationLine: 'line-through',
+    },
 
-  addToBagButton: {
-    flex: 1,
-    backgroundColor: '#B84953',
-    paddingVertical: 12,
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  addToBagText: {
-    color: '#FFF',
-    fontSize: 24,
-    fontWeight: '600',
-  },
+    addToBagButton: {
+      flex: 1,
+      backgroundColor: theme.colors.primary,
+      paddingVertical: 12,
+      borderRadius: 12,
+      alignItems: 'center',
+    },
+    addToBagText: {
+      color: theme.colors.backgroundLight,
+      fontSize: 24,
+      fontWeight: '600',
+    },
 
-  highlightsContainer: {
-    marginBottom: 30,
-  },
-  sectionTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#070707',
-    marginBottom: 15,
-  },
-  highlightGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
+    highlightsContainer: {
+      marginBottom: 30,
+    },
+    sectionTitle: {
+      fontSize: 20,
+      fontWeight: '600',
+      color: theme.colors.textPrimary,
+      marginBottom: 15,
+    },
+    highlightGrid: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
+    },
 
-  verticalDivider: {
-    borderRightColor: '#33333331',
-    borderRightWidth: 0.2,
-  },
-  highlightItem: {
-    marginBottom: 8,
-  },
-  highlightLabel: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#333333',
-  },
+    verticalDivider: {
+      borderRightColor: theme.colors.overlayDark19,
+      borderRightWidth: 0.2,
+    },
+    highlightItem: {
+      marginBottom: 8,
+    },
+    highlightLabel: {
+      fontSize: 14,
+      fontWeight: '500',
+      color: theme.colors.textSecondary,
+    },
 
-  highlightValue: {
-    fontSize: 14,
-    color: '#333',
-  },
+    highlightValue: {
+      fontSize: 14,
+      color: theme.colors.textSecondary,
+    },
 
-  reviewsContainer: {
-    marginBottom: 20,
-  },
-  reviewItem: {
-    backgroundColor: '#FFF',
-    padding: 15,
-    borderRadius: 12,
-    marginBottom: 15,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 1,
-  },
-  reviewHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  reviewerImage: {
-    borderRadius: 20,
-    marginRight: 12,
-  },
-  reviewerInfo: {
-    flex: 1,
-  },
-  reviewerName: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#333333',
-  },
-  reviewerEmail: {
-    fontSize: 10,
-    color: '#333333',
-  },
+    reviewsContainer: {
+      marginBottom: 20,
+    },
+    reviewItem: {
+      backgroundColor: theme.colors.backgroundLight,
+      padding: 15,
+      borderRadius: 12,
+      marginBottom: 15,
+      shadowColor: theme.colors.black,
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.05,
+      shadowRadius: 3,
+      elevation: 1,
+    },
+    reviewHeader: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    reviewerImage: {
+      borderRadius: 20,
+      marginRight: 12,
+    },
+    reviewerInfo: {
+      flex: 1,
+    },
+    reviewerName: {
+      fontSize: 14,
+      fontWeight: '500',
+      color: theme.colors.textSecondary,
+    },
+    reviewerEmail: {
+      fontSize: 10,
+      color: theme.colors.textSecondary,
+    },
 
-  reviewText: {
-    fontSize: 16,
-    color: '#333333',
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  loadingText: {
-    fontSize: 16,
-    color: '#333333',
-  },
-});
+    reviewText: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+    loadingContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    loadingText: {
+      fontSize: 16,
+      color: theme.colors.textSecondary,
+    },
+  });

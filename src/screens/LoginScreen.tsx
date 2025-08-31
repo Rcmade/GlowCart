@@ -4,10 +4,14 @@ import InputWithIcon from '../components/inputs/InputWithIcon';
 import PasswordInput from '../components/inputs/PasswordInput';
 import AuthLayout from '../components/layouts/AuthLayout';
 import useLogin from '../features/auth/hooks/useLogin';
+import { useTheme } from '../providers/theme/ThemeProvider';
+import { ThemeType } from '../providers/theme/themes';
 
 export default function LoginScreen() {
   const { handleInputChange, handleSubmit, inputs, isLoading } = useLogin();
 
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   return (
     <>
       <AuthLayout
@@ -76,67 +80,67 @@ export default function LoginScreen() {
     </>
   );
 }
+const createStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    container: { flex: 1, backgroundColor: theme.colors.backgroundWarm },
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFEDE8' },
-
-  forgotPassword: {
-    alignSelf: 'flex-end',
-    marginBottom: 30,
-  },
-  forgotPasswordText: {
-    color: '#CC3D3D',
-    fontSize: 18,
-    textDecorationLine: 'underline',
-  },
-  loginButton: {
-    backgroundColor: '#B84953',
-    paddingVertical: 12,
-    borderRadius: 12,
-    marginBottom: 30,
-  },
-  loginButtonDisabled: {
-    opacity: 0.8,
-  },
-  loginButtonText: {
-    color: '#FFF',
-    fontSize: 24,
-    fontWeight: '500',
-    textAlign: 'center',
-  },
-  divider: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 25,
-  },
-  line: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#6C6C6C',
-  },
-  orText: {
-    marginHorizontal: 10,
-    color: '#6C6C6C',
-    fontSize: 16,
-  },
-  socialContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 20,
-    marginBottom: 40,
-  },
-  socialButton: {
-    width: 55,
-    height: 55,
-    borderRadius: 12,
-    backgroundColor: '#FFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 1,
-  },
-  socialIcon: {
-    width: 28,
-    height: 28,
-    resizeMode: 'contain',
-  },
-});
+    forgotPassword: {
+      alignSelf: 'flex-end',
+      marginBottom: 30,
+    },
+    forgotPasswordText: {
+      color: theme.colors.primaryLight,
+      fontSize: 18,
+      textDecorationLine: 'underline',
+    },
+    loginButton: {
+      backgroundColor: theme.colors.primary,
+      paddingVertical: 12,
+      borderRadius: 12,
+      marginBottom: 30,
+    },
+    loginButtonDisabled: {
+      opacity: 0.8,
+    },
+    loginButtonText: {
+      color: theme.colors.backgroundLight,
+      fontSize: 24,
+      fontWeight: '500',
+      textAlign: 'center',
+    },
+    divider: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 25,
+    },
+    line: {
+      flex: 1,
+      height: 1,
+      backgroundColor: theme.colors.secondaryGray,
+    },
+    orText: {
+      marginHorizontal: 10,
+      color: theme.colors.secondaryGray,
+      fontSize: 16,
+    },
+    socialContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      gap: 20,
+      marginBottom: 40,
+    },
+    socialButton: {
+      width: 55,
+      height: 55,
+      borderRadius: 12,
+      backgroundColor: theme.colors.backgroundLight,
+      justifyContent: 'center',
+      alignItems: 'center',
+      elevation: 1,
+    },
+    socialIcon: {
+      width: 28,
+      height: 28,
+      resizeMode: 'contain',
+    },
+  });

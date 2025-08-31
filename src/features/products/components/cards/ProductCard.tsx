@@ -1,8 +1,9 @@
 import React from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useTheme } from '../../../../providers/theme/ThemeProvider';
+import { ThemeType } from '../../../../providers/theme/themes';
 import { Product } from '../../types';
-// import { Product } from '../../types';
 
 interface ProductCardProps {
   product: Product;
@@ -16,6 +17,8 @@ const ProductCard = ({
   toggleWishlist,
   wishlist,
 }: ProductCardProps) => {
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
   return (
     <TouchableOpacity
       style={styles.productCard}
@@ -36,7 +39,11 @@ const ProductCard = ({
             <Icon
               name={wishlist.includes(product.id) ? 'heart' : 'heart-outline'}
               size={24}
-              color={wishlist.includes(product.id) ? '#C4767C' : '#8E8E8F'}
+              color={
+                wishlist.includes(product.id)
+                  ? theme.colors.accent
+                  : theme.colors.textDisabled
+              }
             />
           </TouchableOpacity>
         </View>
@@ -46,54 +53,55 @@ const ProductCard = ({
 };
 
 export default ProductCard;
+const createStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    productCard: {
+      flex: 0.48,
+      backgroundColor: theme.colors.backgroundLight,
+      borderRadius: 12,
+      marginBottom: 15,
+      marginHorizontal: '1%',
+      shadowColor: theme.colors.black,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.1,
+      shadowRadius: 4,
+      elevation: 2,
+      position: 'relative',
+      justifyContent: 'space-between',
+    },
 
-const styles = StyleSheet.create({
-  productCard: {
-    flex: 0.48,
-    backgroundColor: '#FFF',
-    borderRadius: 12,
-    marginBottom: 15,
-    marginHorizontal: '1%',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-    position: 'relative',
-  },
+    productImage: {
+      width: '100%',
+      height: 150,
+      borderTopLeftRadius: 12,
+      borderTopRightRadius: 12,
+      resizeMode: 'cover',
+    },
+    wishlistButton: {
+      backgroundColor: theme.colors.backgroundLight,
+      padding: 8,
+      borderRadius: 20,
+    },
 
-  productImage: {
-    width: '100%',
-    height: 150,
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-    resizeMode: 'cover',
-  },
-  wishlistButton: {
-    backgroundColor: '#FFF',
-    padding: 8,
-    borderRadius: 20,
-  },
+    productInfo: {
+      padding: 12,
+    },
+    productName: {
+      fontSize: 14,
+      fontWeight: '600',
+      color: theme.colors.darkGray,
+      marginBottom: 5,
+      lineHeight: 18,
+    },
 
-  productInfo: {
-    padding: 12,
-  },
-  productName: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 5,
-    lineHeight: 18,
-  },
-
-  productFooter: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  productPrice: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#C4767C',
-  },
-});
+    productFooter: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+    productPrice: {
+      fontSize: 16,
+      fontWeight: 'bold',
+      color: theme.colors.accent,
+    },
+  });

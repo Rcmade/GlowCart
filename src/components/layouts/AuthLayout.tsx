@@ -13,6 +13,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RootStackParamList } from '../../navigation/AppNavigator';
+import { useTheme } from '../../providers/theme/ThemeProvider';
+import { ThemeType } from '../../providers/theme/themes';
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -31,6 +33,8 @@ const AuthLayout = ({
     useNavigation<
       StackNavigationProp<RootStackParamList, AuthLayoutProps['navigate']>
     >();
+  const { theme } = useTheme();
+  const styles = createStyles(theme);
 
   return (
     <>
@@ -73,52 +77,52 @@ const AuthLayout = ({
 };
 
 export default AuthLayout;
+const createStyles = (theme: ThemeType) =>
+  StyleSheet.create({
+    container: { flex: 1, backgroundColor: theme.colors.backgroundWarm },
+    header: {
+      alignItems: 'center',
+      paddingVertical: 60,
+      borderBottomLeftRadius: 30,
+      borderBottomRightRadius: 30,
+      paddingTop: 58,
+      paddingBottom: 58,
+      backgroundColor: '#F1B0B0',
+    },
+    title: {
+      textAlign: 'center',
+      fontSize: 34,
+      fontWeight: '900',
+      color: theme.colors.primary,
+    },
+    subtitle: {
+      marginTop: 8,
+      textAlign: 'center',
 
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFEDE8' },
-  header: {
-    alignItems: 'center',
-    paddingVertical: 60,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    paddingTop: 58,
-    paddingBottom: 58,
-    backgroundColor: '#F1B0B0',
-  },
-  title: {
-    textAlign: 'center',
-    fontSize: 34,
-    fontWeight: '900',
-    color: '#B84953',
-  },
-  subtitle: {
-    marginTop: 8,
-    textAlign: 'center',
+      fontSize: 26,
+      color: theme.colors.accentMuted,
+      fontWeight: '500',
+    },
+    scrollContent: {
+      flexGrow: 1,
+      paddingHorizontal: 30,
+      paddingTop: 40,
+    },
 
-    fontSize: 26,
-    color: '#AD7373',
-    fontWeight: '500',
-  },
-  scrollContent: {
-    flexGrow: 1,
-    paddingHorizontal: 30,
-    paddingTop: 40,
-  },
-
-  formContainer: {
-    width: '100%',
-  },
-  bottomContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  helpText: {
-    color: '#6C6C6C',
-    fontSize: 16,
-  },
-  navigationText: {
-    color: '#B84953',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-});
+    formContainer: {
+      width: '100%',
+    },
+    bottomContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    helpText: {
+      color: theme.colors.secondaryGray,
+      fontSize: 16,
+    },
+    navigationText: {
+      color: theme.colors.primary,
+      fontSize: 14,
+      fontWeight: '600',
+    },
+  });

@@ -7,6 +7,7 @@ export interface StorageSchema {
   token: string;
   theme: 'light' | 'dark';
   currentUser: User | null;
+  wishlists: Record<string, number[]>;
 }
 type StorageKey = keyof StorageSchema;
 

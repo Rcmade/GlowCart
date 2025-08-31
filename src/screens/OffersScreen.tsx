@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -65,7 +65,7 @@ export default function OffersScreen() {
         </View>
 
         <View style={styles.emptyOffers}>
-          <Icon name="pricetag-outline" size={48} color="#C4767C" />
+          <Icon name="pricetag-outline" size={48} color="#B84953" />
           <Text style={styles.emptyOffersTitle}>More offers coming soon!</Text>
           <Text style={styles.emptyOffersText}>
             We're working on bringing you more exciting deals and discounts.
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 15,
     right: 15,
-    backgroundColor: '#C4767C',
+    backgroundColor: '#B84953',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   claimButton: {
-    backgroundColor: '#C4767C',
+    backgroundColor: '#B84953',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,

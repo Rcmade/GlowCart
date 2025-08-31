@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import React from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  TouchableOpacity,
   Alert,
-  // Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { useProductStore } from '../stores/useProductStore';
+import Loading from '../components/loaders/Loading';
+import RatingCard from '../features/products/components/cards/RatingCard';
+import useProductDetails from '../features/products/hooks/useProductDetails';
 import { RootStackParamList } from '../navigation/AppNavigator';
-import { Product } from '../types';
 
 type ProductDetailsScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -30,15 +30,8 @@ export default function ProductDetailsScreen() {
   const navigation = useNavigation<ProductDetailsScreenNavigationProp>();
   const route = useRoute<ProductDetailsScreenRouteProp>();
   const { id } = route.params;
-  const { products } = useProductStore();
-  const [product, setProduct] = useState<Product | null>(null);
 
-  useEffect(() => {
-    if (id) {
-      const foundProduct = products.find(p => p.id === parseInt(id));
-      setProduct(foundProduct || null);
-    }
-  }, [id, products]);
+  const { product, isLoading } = useProductDetails(id);
 
   const handleAddToBag = () => {
     Alert.alert(
@@ -47,30 +40,9 @@ export default function ProductDetailsScreen() {
     );
   };
 
-  const renderStars = (rating: number) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<Icon key={i} name="star" size={24} color="#000000" />);
-    }
-
-    if (hasHalfStar) {
-      stars.push(
-        <Icon key="half" name="star-half" size={24} color="#000000" />,
-      );
-    }
-
-    for (let i = stars.length; i < 5; i++) {
-      stars.push(
-        <Icon key={i} name="star-outline" size={24} color="#000000" />,
-      );
-    }
-
-    return stars;
-  };
-
+  if (isLoading) {
+    return <Loading />;
+  }
   if (!product) {
     return (
       <SafeAreaView style={styles.container}>
@@ -117,7 +89,7 @@ export default function ProductDetailsScreen() {
           <Text style={styles.productDescription}>{product.description}</Text>
 
           <View style={styles.ratingContainer}>
-            <View style={styles.stars}>{renderStars(product.rating.rate)}</View>
+            <RatingCard rating={product.rating.rate} />
             <Text style={styles.ratingText}>
               {product.rating.rate.toFixed(1)}/5
             </Text>
@@ -203,9 +175,8 @@ export default function ProductDetailsScreen() {
                       {review?.reviewerEmail || 'N/A'}
                     </Text>
                   </View>
-                  <View style={styles.reviewStars}>
-                    {renderStars(review?.rating || 0)}
-                  </View>
+
+                  <RatingCard rating={product.rating.rate} size={20} />
                 </View>
                 <Text style={styles.reviewText}>
                   {review?.comment || 'N/A'}
@@ -287,10 +258,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  stars: {
-    flexDirection: 'row',
-    marginRight: 10,
-  },
+
   ratingText: {
     fontSize: 18,
     color: '#070707',
@@ -410,9 +378,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     color: '#333333',
   },
-  reviewStars: {
-    flexDirection: 'row',
-  },
+
   reviewText: {
     fontSize: 16,
     color: '#333333',

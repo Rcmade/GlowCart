@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import {
-  TextInput,
-  View,
-  TouchableOpacity,
-  TextInputProps,
   StyleSheet,
+  TextInput,
+  TextInputProps,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 

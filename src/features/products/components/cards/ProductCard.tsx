@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Product } from '../../types';
+// import { Product } from '../../types';
 
 interface ProductCardProps {
   product: Product;
@@ -21,21 +22,24 @@ const ProductCard = ({
       onPress={() => onProductClick(String(product.id))}
     >
       <Image source={{ uri: product.image }} style={styles.productImage} />
-      <TouchableOpacity
-        style={styles.wishlistButton}
-        onPress={() => toggleWishlist(product.id)}
-      >
-        <Icon
-          name={wishlist.includes(product.id) ? 'heart' : 'heart-outline'}
-          size={16}
-          color={wishlist.includes(product.id) ? '#C4767C' : '#8E8E8F'}
-        />
-      </TouchableOpacity>
+
       <View style={styles.productInfo}>
         <Text style={styles.productName} numberOfLines={2}>
           {product.title}
         </Text>
-        <Text style={styles.productPrice}>${product.price.toFixed(2)}</Text>
+        <View style={styles.productFooter}>
+          <Text style={styles.productPrice}>${product.price.toFixed(2)}</Text>
+          <TouchableOpacity
+            style={styles.wishlistButton}
+            onPress={() => toggleWishlist(product.id)}
+          >
+            <Icon
+              name={wishlist.includes(product.id) ? 'heart' : 'heart-outline'}
+              size={24}
+              color={wishlist.includes(product.id) ? '#C4767C' : '#8E8E8F'}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -66,17 +70,9 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   wishlistButton: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
     backgroundColor: '#FFF',
     padding: 8,
     borderRadius: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
   },
 
   productInfo: {
@@ -88,6 +84,12 @@ const styles = StyleSheet.create({
     color: '#333',
     marginBottom: 5,
     lineHeight: 18,
+  },
+
+  productFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   productPrice: {
     fontSize: 16,

@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
   FlatList,
   StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons'; // adjust if using different icon lib
 import {

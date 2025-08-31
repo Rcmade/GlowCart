@@ -1,62 +1,76 @@
-import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-  TextInput,
-  RefreshControl,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import React, { useState } from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialDesignIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useProductStore } from '../stores/useProductStore';
+import ProductCard from '../features/products/components/cards/ProductCard';
+import FilterDialog from '../features/products/components/dialog/FilterDialog';
+import { useProductFilters } from '../features/products/hooks/useProductFilters';
+import { useProducts } from '../features/products/hooks/useProducts';
+import { Product } from '../features/products/types';
+import useWishlist from '../features/wishlist/hooks/useWishlist';
 import { RootStackParamList } from '../navigation/AppNavigator';
-import ProductCard from '../components/cards/ProductCard';
-import { Product } from '../types';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList>;
 
 export default function HomeScreen() {
   const navigation = useNavigation<HomeScreenNavigationProp>();
-  const { products, loading, fetchProducts, toggleWishlist, wishlist } =
-    useProductStore();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [refreshing, setRefreshing] = useState(false);
+  // const { products, loading, fetchProducts, toggleWishlist, wishlist } =
+  //   useProductStore();
 
   const tabBarHeight = useBottomTabBarHeight();
-
-  useEffect(() => {
-    fetchProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const onRefresh = async () => {
-    setRefreshing(true);
-    await fetchProducts();
-    setRefreshing(false);
-  };
-
-  const filteredProducts = searchQuery
-    ? products.filter(product =>
-        product.title.toLowerCase().includes(searchQuery.toLowerCase()),
-      )
-    : products;
 
   const onProductClick = (productId: string) => {
     navigation.navigate('ProductDetails', { id: productId });
   };
 
+  // filter state manager
+  const {
+    filters,
+    setSearch,
+    setCategory,
+    setTags,
+    setSort,
+    setLimit,
+    appliedCount,
+  } = useProductFilters({ limit: 20 });
+
+  const [isFilterModalVisible, setFilterModalVisible] = useState(false);
+  const { wishlist, toggle } = useWishlist();
+
+  // main query hook
+  const {
+    products,
+    fetchNextPage,
+    hasNextPage,
+    isLoading,
+    refetch,
+    isFetchingNextPage,
+  } = useProducts({ filters, searchDebounceMs: 400 });
+
+  const onRefresh = async () => {
+    await refetch();
+  };
   const renderProductCard = ({ item }: { item: Product }) => (
     <ProductCard
       product={item}
       onProductClick={() => onProductClick(item.id.toString())}
-      toggleWishlist={toggleWishlist}
+      toggleWishlist={toggle}
+      // toggleWishlist={() => {}}
       wishlist={wishlist}
+      // wishlist={[]}
     />
   );
 
@@ -95,8 +109,8 @@ export default function HomeScreen() {
                   style={styles.searchInput}
                   placeholder="Search for all products"
                   placeholderTextColor={'#4B4B4B'}
-                  value={searchQuery}
-                  onChangeText={setSearchQuery}
+                  value={filters.search}
+                  onChangeText={setSearch}
                 />
               </View>
             </View>
@@ -107,29 +121,35 @@ export default function HomeScreen() {
               <View style={styles.sectionHeader}>
                 <Text style={styles.sectionTitle}>Best Products</Text>
                 <Text style={styles.productCount}>
-                  {filteredProducts.length} products
+                  {products.length} products
                 </Text>
               </View>
 
               <TouchableOpacity
-                // onPress={handleLogin}
-                style={styles.applyButton}
+                onPress={() => setFilterModalVisible(true)}
+                style={styles.filterButton}
               >
-                <Text style={styles.applyText}>Apply</Text>
+                <Text style={styles.filterText}>
+                  Filters {appliedCount > 0 ? `(${appliedCount})` : ''}
+                </Text>
                 <MaterialDesignIcons name="menu-down" size={24} color="#000" />
               </TouchableOpacity>
             </View>
 
             <FlatList
-              data={filteredProducts}
+              data={products}
               renderItem={renderProductCard}
-              keyExtractor={item => item.id.toString()}
+              keyExtractor={item => item.id?.toString()}
               numColumns={2}
               contentContainerStyle={{ paddingBottom: tabBarHeight + 60 }}
+              onEndReached={() => {
+                if (hasNextPage && !isFetchingNextPage) fetchNextPage();
+              }}
               showsVerticalScrollIndicator={false}
+              onEndReachedThreshold={0.5}
               refreshControl={
                 <RefreshControl
-                  refreshing={refreshing}
+                  refreshing={isLoading}
                   onRefresh={onRefresh}
                   tintColor="#B84953"
                   colors={['#B84953']}
@@ -138,12 +158,35 @@ export default function HomeScreen() {
               ListEmptyComponent={
                 <View style={styles.emptyState}>
                   <Text style={styles.emptyStateText}>
-                    {loading ? 'Loading products...' : 'No products found'}
+                    {isLoading ? 'Loading products...' : 'No products found'}
                   </Text>
                 </View>
               }
+              ListFooterComponent={
+                isFetchingNextPage ? (
+                  <View>
+                    <ActivityIndicator size="small" color="#B84953" />
+                  </View>
+                ) : null
+              }
             />
           </View>
+
+          {/* Filter modal */}
+          <FilterDialog
+            visible={isFilterModalVisible}
+            initialFilters={filters}
+            onClose={() => setFilterModalVisible(false)}
+            onApply={({ category, tags, sort, limit }) => {
+              // commit the selected filters
+              setCategory(category);
+              setTags(tags);
+              setSort(sort);
+              setLimit(limit);
+              // close modal
+              setFilterModalVisible(false);
+            }}
+          />
         </SafeAreaView>
       </View>
     </>
@@ -201,6 +244,16 @@ const styles = StyleSheet.create({
     color: '#333',
   },
 
+  filterSummary: {
+    marginLeft: 8,
+    backgroundColor: '#C4767C',
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   content: {
     paddingTop: 6,
     paddingHorizontal: 20,
@@ -226,7 +279,7 @@ const styles = StyleSheet.create({
     color: '#636363',
   },
 
-  applyButton: {
+  filterButton: {
     backgroundColor: '#fff',
     height: 40,
     paddingHorizontal: 8,
@@ -234,7 +287,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  applyText: {
+  filterText: {
     color: '#000',
     fontSize: 14,
     fontWeight: '500',

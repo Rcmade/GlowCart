@@ -1,20 +1,20 @@
 import React from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
   Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { menuItems, supportItems } from '../content/profileContent';
-import { useCurrentUser } from '../features/auth/hooks/useCurrentUser';
 import MenuItems from '../features/auth/components/card/MenuItems';
+import { useCurrentUser } from '../features/auth/hooks/useCurrentUser';
 
 export default function ProfileScreen() {
-  const { logout } = useCurrentUser();
+  const { logout, currentUser } = useCurrentUser();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -35,8 +35,12 @@ export default function ProfileScreen() {
               style={styles.profileImage}
             />
             <View style={styles.profileDetails}>
-              <Text style={styles.profileName}>Olivia</Text>
-              <Text style={styles.profileEmail}>Olivia@gmail.com</Text>
+              <Text style={styles.profileName}>
+                {currentUser?.name || 'N/A'}
+              </Text>
+              <Text style={styles.profileEmail}>
+                {currentUser?.email || 'N/A'}
+              </Text>
             </View>
           </View>
           <TouchableOpacity style={styles.editButton}>

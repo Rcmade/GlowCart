@@ -1,11 +1,11 @@
 import React from 'react';
 import {
-  TextInput,
-  View,
-  StyleSheet,
-  TextInputProps,
   StyleProp,
+  StyleSheet,
+  TextInput,
+  TextInputProps,
   TextStyle,
+  View,
   ViewStyle,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';

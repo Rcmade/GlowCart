@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import InputWithIcon from '../components/inputs/InputWithIcon';
 import PasswordInput from '../components/inputs/PasswordInput';
 import AuthLayout from '../components/layouts/AuthLayout';

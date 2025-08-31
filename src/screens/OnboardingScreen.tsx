@@ -1,20 +1,19 @@
-import React, { useEffect } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../navigation/AppNavigator';
-import { Dimensions } from 'react-native';
-import { StatusBar } from 'react-native';
+import React, { useEffect } from 'react';
+import {
+  Dimensions,
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import GradientContainer from '../components/containers/GradientContainer';
 import { useCurrentUser } from '../features/auth/hooks/useCurrentUser';
+import { RootStackParamList } from '../navigation/AppNavigator';
 
 const { width, height } = Dimensions.get('window');
 type OnboardingScreenNavigationProp = StackNavigationProp<
@@ -36,14 +35,6 @@ export default function OnboardingScreen() {
     }
     return () => {};
   }, [currentUser, isLoading, navigation]);
-
-  if (isLoading) {
-    return (
-      <View style={styles.loader}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
 
   return (
     <>
@@ -153,5 +144,4 @@ const styles = StyleSheet.create({
     borderRadius: 24,
     backgroundColor: '#F3E2DD',
   },
-  loader: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 });

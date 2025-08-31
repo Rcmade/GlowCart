@@ -18,32 +18,29 @@ _On-device screenshots (stored in `assets/`):_
 
 ### Onboarding / Get Started
 
-![Get Started](./assets/GetStarted.jpg)
+![Get Started](./assets/GetStartedResized.jpg)
 
 ### Login
 
-![Login Screen](./assets/LoginScreen.jpg)
+![Login Screen](./assets/LoginScreenResized.jpg)
 
 ### Home / Product List
 
-![Home Screen](./assets/HomeScreen.jpg)
+![Home Screen](./assets/HomeScreenResized.jpg)
 
 ### Filter Modal
 
-![Filter Modal](./assets/FilterModal.jpg)
+![Filter Modal](./assets/FilterModalResized.jpg)
 
-### Product Details (1)
+### Product Details
 
-![Product Details 1](./assets/ProductDetails1.jpg)
-
-### Product Details (2)
-
-![Product Details 2](./assets/ProductDetails2.jpg)
+![Product Details 1](./assets/ProductDetails1Resized.jpg)
+![Product Details 2](./assets/ProductDetails2Resized.jpg)
 
 ### Wishlist / Profile
 
-![Wishlist](./assets/Wishlist.jpg)
-![Profile](./assets/ProfileScreen.jpg)
+![Wishlist](./assets/WishlistResized.jpg)
+![Profile](./assets/ProfileScreenResized.jpg)
 
 ---
 

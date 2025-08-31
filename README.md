@@ -113,7 +113,10 @@ src/
 │  ├─ RegisterScreen.tsx
 │  ├─ HomeScreen.tsx
 │  └─ ProductDetailsScreen.tsx
-assets/ # README images you already have
+└─ assets/
+   └─ screenshots/          # README images you already have
+
+assets/              # screenshots used in README
 ```
 
 ---

@@ -47,7 +47,6 @@ export function useProducts({
     ],
     queryFn: async ({ pageParam = 0 }) => {
       const params = buildServerParams(pageParam);
-      console.log({ pageParam, params });
       const res = await fetchProducts(params);
       return res;
     },

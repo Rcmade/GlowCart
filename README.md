@@ -5,10 +5,14 @@ Features include onboarding, authentication (mock), product listing, product det
 
 ---
 
-## Demo Video
+## Demo
 
-> Video demo will be added here.  
-> Link (Loom/Jam/Drive): **_paste your video link here later_**
+🎥 **Video Demonstration**  
+[Watch the demo on Google Drive](https://drive.google.com/file/d/1wMiDRQMu2qyJ85vHDfkiMOJ5tuRIGUoE/view)
+
+📱 **APK File**  
+The latest build APK is available inside the repository under [`/assets`](./assets/glowcart.apk).  
+You can download it directly from GitHub or transfer it to an Android device to install.
 
 ---
 
